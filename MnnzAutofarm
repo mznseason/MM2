@@ -38,8 +38,6 @@ frame.Size = UDim2.new(0, 280, 0, 280)
 frame.Position = UDim2.new(0.5, -140, 0.3, 0)
 frame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 frame.BorderSizePixel = 0
-frame.Active = true
-frame.Draggable = true
 Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
 local stroke = Instance.new("UIStroke", frame)
 stroke.Color = Color3.fromRGB(110, 110, 160)
@@ -48,7 +46,7 @@ stroke.Thickness = 2
 local title = Instance.new("TextLabel", frame)
 title.Size = UDim2.new(1, -20, 0, 40)
 title.Position = UDim2.new(0, 10, 0, 5)
-title.Text = "⛱️Mnnz Beach balls Autofarm"
+title.Text = "⛱️Coin/Beach balls Autofarm"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.BackgroundTransparency = 1
 title.Font = Enum.Font.GothamBold
@@ -64,7 +62,7 @@ separator.BorderSizePixel = 0
 local credit = Instance.new("TextLabel", frame)
 credit.Size = UDim2.new(1, -20, 0, 20)
 credit.Position = UDim2.new(0, 10, 1, -25)
-credit.Text = "Made by WYMScriptsRoblox"
+credit.Text = "Made by Mnnz Scripts"
 credit.TextColor3 = Color3.fromRGB(170, 170, 170)
 credit.BackgroundTransparency = 1
 credit.Font = Enum.Font.Gotham
@@ -123,6 +121,47 @@ local afkBtn = makeButton(100, "Anti-AFK: OFF")
 local speedBtn = makeButton(140, "Fly Speed: 15")
 local counterLabel = makeLabel(180, "Coins/Eggs Collected: 0")
 local timerLabel = makeLabel(205, "Time Active: 0s")
+
+-- CUSTOM DRAG SYSTEM
+local isDragging = false
+local dragStart = nil
+local startPos = nil
+
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		local mousePos = UserInputService:GetMouseLocation()
+		local framePos = frame.AbsolutePosition
+		local frameSize = frame.AbsoluteSize
+		if mousePos.X >= framePos.X and mousePos.X <= framePos.X + frameSize.X and
+		   mousePos.Y >= framePos.Y and mousePos.Y <= framePos.Y + frameSize.Y then
+			isDragging = true
+			dragStart = mousePos
+			startPos = frame.Position
+		end
+	end
+end)
+
+UserInputService.InputChanged:Connect(function(input, gameProcessed)
+	if gameProcessed then return end
+	if isDragging and (input.UserInputType == Enum.UserInputType.MouseMovement or input.UserInputType == Enum.UserInputType.Touch) then
+		local mousePos = UserInputService:GetMouseLocation()
+		local delta = mousePos - dragStart
+		local newPos = UDim2.new(
+			startPos.X.Scale,
+			startPos.X.Offset + delta.X,
+			startPos.Y.Scale,
+			startPos.Y.Offset + delta.Y
+		)
+		frame.Position = newPos
+	end
+end)
+
+UserInputService.InputEnded:Connect(function(input, gameProcessed)
+	if input.UserInputType == Enum.UserInputType.MouseButton1 or input.UserInputType == Enum.UserInputType.Touch then
+		isDragging = false
+	end
+end)
 
 -- AFK
 afkBtn.MouseButton1Click:Connect(function()
